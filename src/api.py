@@ -1,7 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+# Local Imports
+from config import settings, Settings
 
 fastapi = FastAPI()
 
 @fastapi.get("/")
-async def index():
-    return {"message": "Hello, World!"}
+async def index(settings: Settings = Depends(settings)):
+    return settings
