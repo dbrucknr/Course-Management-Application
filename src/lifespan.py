@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 # Local Dependencies
 from main import database
+from generate_data import *
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[Any, None]:
@@ -15,5 +16,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[Any, None]:
         On stop: Drop all tables in the database.
     """
     await database.create_all_tables()
+    await generate_person("Alice")
     yield
     await database.drop_all_tables()
