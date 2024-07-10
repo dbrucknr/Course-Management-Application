@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "mads-platform-concept"
+version = "0.1.0"
+description = ""
+authors = ["Derek Bruckner <dbrucknr@umich.edu>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+uvicorn = "^0.30.1"
+fastapi = "^0.111.0"
+uvloop = "^0.19.0"
+httptools = "^0.6.1"
+asyncpg = "^0.29.0"
+sqlmodel = "^0.0.19"
+pydantic = "^2.8.2"
+pydantic-settings = "^2.3.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
