@@ -16,6 +16,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[Any, None]:
         On stop: Drop all tables in the database.
     """
     await database.create_all_tables()
-    await generate_person("Alice")
+    await generate_data()
     yield
-    await database.drop_all_tables()
+    # await database.drop_all_tables()
