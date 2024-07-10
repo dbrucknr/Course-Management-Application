@@ -3,8 +3,10 @@ from fastapi import FastAPI, Depends
 from config import settings, Settings
 from lifespan import lifespan
 from models import *
+from person_router import persons_router
 
 fastapi = FastAPI(lifespan=lifespan)
+fastapi.include_router(persons_router)
 
 @fastapi.get("/")
 async def index(settings: Settings = Depends(settings)):

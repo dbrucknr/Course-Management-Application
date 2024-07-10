@@ -8,15 +8,24 @@ from main import database
 
 fake = Faker()
 
+async def check_if_data_exists() -> bool:
+    async for session in database.get_session():
+        statement = select(Person)
+        result = await session.exec(statement)
+        people = result.first()
+        return True if people else False
+
 async def generate_person(name: str) -> Person:
     async for session in database.get_session():
         email_prefix = name.replace(" ", "_").lower()
         person = Person(name=name, email=f"{ email_prefix }@university.edu")
+        # Check if email already exists
         statement = select(Person).where(Person.email == person.email)
         result = await session.exec(statement)
         existing_email = result.one_or_none()
         if existing_email:
             return 
+        
         session.add(person)
         await session.commit()
         await session.refresh(instance=person)
