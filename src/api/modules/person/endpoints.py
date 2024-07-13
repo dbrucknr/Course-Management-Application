@@ -1,7 +1,7 @@
 from functools import partial
 from database import *
 
-async def people(
+async def all(
     records: PaginatedResponse[Person] = Depends(
         partial(select_all_paginated, Person)
     )

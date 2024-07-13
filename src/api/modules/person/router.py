@@ -3,10 +3,10 @@ from fastapi import APIRouter
 from api.modules.person import endpoints
 from database import *
 
-router = APIRouter(prefix="/test")
+router = APIRouter(prefix="/people")
 
 router.add_api_route(
-    path="/people",
-    endpoint=endpoints.people,
+    path="/",
+    endpoint=endpoints.all,
     response_model=PaginatedResponse[PersonPublic]
 )
