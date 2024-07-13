@@ -4,13 +4,13 @@ from sqlmodel import select, func
 from sqlmodel.ext.asyncio.session import AsyncSession
 from main import database
 from models import *
-# from schemas import PublicStudent
+from schemas import PaginatedResponse
 
 persons_router = APIRouter(prefix="/people", tags=["People"])
 
 # GET: http://localhost:8000/people/?offset=0&limit=100
 # http://localhost:8000/people/?offset=30&limit=100
-@persons_router.get("/")
+@persons_router.get("/", response_model=PaginatedResponse[PersonPublic])
 async def people(
     session: AsyncSession = Depends(database.get_session),
     offset: int = 0,
@@ -26,16 +26,16 @@ async def people(
     result = await session.exec(statement)
     people = result.all()
 
-    return {
-        "current_page": offset,
-        "total_pages": ceil(total_count / limit),
-        "count": total_count, 
-        "people": people,
-    }
+    return PaginatedResponse(
+        current_page=offset,
+        total_pages=ceil(total_count / limit),
+        count=total_count, 
+        data=people
+    )
 
 @persons_router.get(
     "/students", 
-    # response_model=list[PublicStudent]
+    response_model=list[PublicStudent]
 )
 async def students(
     session: AsyncSession = Depends(database.get_session),

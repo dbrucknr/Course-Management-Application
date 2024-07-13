@@ -25,21 +25,36 @@ class Course:
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional
 
-class Person(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+# https://stackoverflow.com/questions/74252768/missinggreenlet-greenlet-spawn-has-not-been-called
+
+class PersonBase(SQLModel):
     name: str
     email: str = Field(index=True, unique=True)
-    student: Optional["Student"] = Relationship(back_populates="person")
+
+class Person(PersonBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    student: Optional["Student"] = Relationship(back_populates="person", sa_relationship_kwargs={'lazy': 'selectin'})
     instructor: Optional["Instructor"] = Relationship(back_populates="person")
 
 
-class Student(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    person_id: int = Field(foreign_key="person.id")
-    person: Optional[Person] = Relationship(back_populates="student")
+class PersonPublic(SQLModel):
+    name: str
+    email: str
 
-# class PublicStudent(Student):
-#     person: Person
+class StudentBase(SQLModel):
+    person_id: int = Field(foreign_key="person.id")
+    
+
+class Student(StudentBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    person: Optional[Person] = Relationship(back_populates="student", sa_relationship_kwargs={'lazy': 'selectin'})
+
+class PublicStudent(StudentBase):
+    id: int
+    person: PersonPublic
+
+
+
 
 class Instructor(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)

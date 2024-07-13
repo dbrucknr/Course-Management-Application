@@ -18,6 +18,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[Any, None]:
     await database.create_all_tables()
     initialized = await check_if_data_exists()
     if not initialized:
-        await generate_data()
+        await create_fake_data()
     yield
     # await database.drop_all_tables()
