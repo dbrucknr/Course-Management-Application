@@ -4,11 +4,11 @@ from contextlib import asynccontextmanager
 # FastAPI Dependencies
 from fastapi import FastAPI
 # Local Dependencies
-from main import database
+from database import database
 from generate_data import *
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncGenerator[Any, None]:
+async def lifespan(_: FastAPI) -> AsyncGenerator[Any, None]:
     """
         Lifespan event handler for FastAPI application.
 

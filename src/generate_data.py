@@ -4,7 +4,7 @@ from sqlmodel import select
 from faker import Faker
 from asyncstdlib import map
 from database.models import *
-from main import database
+from database import database
 
 fake = Faker()
 

@@ -4,7 +4,7 @@ from fastapi import Depends, Query
 from sqlmodel import SQLModel, select, func
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from main import database
+from database import database
 from .schemas import PaginatedResponse
 
 async def count_records(model: Type[SQLModel], session: AsyncSession) -> int:

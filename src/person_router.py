@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends
 from functools import partial
 
-from database.models import *
-from database.utilities import select_all_paginated
-from database.schemas import PaginatedResponse 
+from database import *
 
 persons_router = APIRouter(prefix="/people", tags=["People"])
 

@@ -33,3 +33,5 @@ class AsyncDatabase:
     async def drop_all_tables(self):
         async with self.engine.begin() as connection:
             await connection.run_sync(SQLModel.metadata.drop_all)
+
+database = AsyncDatabase()

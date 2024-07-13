@@ -1,7 +1,4 @@
 from uvicorn import run
-from async_database import AsyncDatabase
-
-database = AsyncDatabase()
 
 if __name__ == "__main__":
     # Run FastAPI
