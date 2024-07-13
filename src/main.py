@@ -1,5 +1,5 @@
 from uvicorn import run
-from database import AsyncDatabase
+from async_database import AsyncDatabase
 
 database = AsyncDatabase()
 
