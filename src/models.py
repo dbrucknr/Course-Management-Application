@@ -26,7 +26,7 @@ from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional
 
 # https://stackoverflow.com/questions/74252768/missinggreenlet-greenlet-spawn-has-not-been-called
-
+# -----------------------------------------------------------------------------------------------------------------------
 class PersonBase(SQLModel):
     name: str
     email: str = Field(index=True, unique=True)
@@ -41,25 +41,33 @@ class PersonPublic(SQLModel):
     name: str
     email: str
 
+# -----------------------------------------------------------------------------------------------------------------------
 class StudentBase(SQLModel):
-    person_id: int = Field(foreign_key="person.id")
+    pass
     
 
 class Student(StudentBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    person_id: int = Field(foreign_key="person.id")
     person: Optional[Person] = Relationship(back_populates="student", sa_relationship_kwargs={'lazy': 'selectin'})
 
 class PublicStudent(StudentBase):
     id: int
     person: PersonPublic
+# -----------------------------------------------------------------------------------------------------------------------
 
+class InstructorBase(SQLModel):
+    pass
 
-
-
-class Instructor(SQLModel, table=True):
+class Instructor(InstructorBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     person_id: int = Field(foreign_key="person.id")
-    person: Optional[Person] = Relationship(back_populates="instructor")
+    person: Optional[Person] = Relationship(back_populates="instructor", sa_relationship_kwargs={'lazy': 'selectin'})
+
+
+class PublicInstructor(InstructorBase):
+    id: int
+    person: PersonPublic
 
 # class Admin(SQLModel, table=True):
 #     id: Optional[int] = Field(default=None, primary_key=True)
