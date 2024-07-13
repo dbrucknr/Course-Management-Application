@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends
 # Local Imports
 from config import settings, Settings
 from lifespan import lifespan
-from models import *
+from database.models import *
 from person_router import persons_router
 
 fastapi = FastAPI(lifespan=lifespan)

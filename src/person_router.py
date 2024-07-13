@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from functools import partial
 
-from models import *
+from database.models import *
 from database.utilities import select_all_paginated
 from database.schemas import PaginatedResponse 
 

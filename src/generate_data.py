@@ -1,10 +1,9 @@
 from typing import AsyncIterator
 import random
 from sqlmodel import select
-from sqlmodel.ext.asyncio.session import AsyncSession
 from faker import Faker
 from asyncstdlib import map
-from models import Person, Student, Instructor
+from database.models import *
 from main import database
 
 fake = Faker()
