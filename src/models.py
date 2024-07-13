@@ -21,20 +21,6 @@ class Course:
     name: str
     department_id: int
 
-# Role Based Models
-# class Person:
-#     id: int
-#     name: str
-#     email: str
-#     password: str
-
-# class Student:
-#     id: int
-#     person_id: int
-
-# class Instructor:
-#     id: int
-#     person_id: int
 
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional
@@ -46,10 +32,14 @@ class Person(SQLModel, table=True):
     student: Optional["Student"] = Relationship(back_populates="person")
     instructor: Optional["Instructor"] = Relationship(back_populates="person")
 
+
 class Student(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     person_id: int = Field(foreign_key="person.id")
     person: Optional[Person] = Relationship(back_populates="student")
+
+# class PublicStudent(Student):
+#     person: Person
 
 class Instructor(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
