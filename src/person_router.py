@@ -11,7 +11,7 @@ from functools import partial
 persons_router = APIRouter(prefix="/people", tags=["People"])
 
 
-async def count_records(model: Type[SQLModel], session: AsyncSession,) -> AsyncGenerator[int, None]:
+async def count_records(model: Type[SQLModel], session: AsyncSession,) -> int:
     count_statement = select(func.count()).select_from(model)
     count_result = await session.exec(count_statement)
     total_count = count_result.one()
